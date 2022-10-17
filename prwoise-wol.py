@@ -19,8 +19,8 @@ except:
     quit()
 
 
-def ip_validation(current):
-    if not re.search("^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$", current):
+def ip_validation(bc_address, current):
+    if not re.search(r"^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$", current):
         raise errors.ValidationError('', reason="Your BC-Address isn't valid!")
     return True
 
