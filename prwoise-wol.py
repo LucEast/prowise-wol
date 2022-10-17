@@ -41,21 +41,22 @@ class Database:
     def __init__(self) -> None:
         pass
 
-    def get_mac(self):
+    def get_mac(self, filepath):
         try:
             conn = psycopg2.connect("dbname=iserv user=postgres")
             cur = conn.cursor()
             cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ 'ProwiseBoard' AND mac IS NOT NULL;")
             rows = cur.fetchall()
 
-            f = open('/group/domain.admins/Files/prowise.wol', 'w')
-            for row in rows:
-                f.write("%s\n" % row + bc_address)
-            print("Done!")
+            with open(filepath, 'w+') as f:
+                for row in rows:
+                    f.write("%s\n" % row + bc_address)
+                print("Done!")
+
         except exception as E:
             print(E)
 
 
 if __name__ == "__main__":
     db = Database()
-    db.get_mac
+    db.get_mac("/group/domain.admins/Files/prowise.wol")
