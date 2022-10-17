@@ -48,10 +48,10 @@ class Database:
             cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ 'ProwiseBoard' AND mac IS NOT NULL;")
             rows = cur.fetchall()
 
-            with open('/group/domain.admins/Files/prowise.wol', 'w') as f:
-                for row in rows:
-                    f.write("%s\n" % row + bc_address)
-                print("Done!")
+            f = open('/group/domain.admins/Files/prowise.wol', 'w')
+            for row in rows:
+                f.write("%s\n" % row + bc_address)
+            print("Done!")
         except exception as E:
             print(E)
 
