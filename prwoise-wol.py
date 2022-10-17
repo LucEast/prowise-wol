@@ -20,7 +20,7 @@ except:
 
 
 def ip_validation(current):
-    if not re.match('^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$', current):
+    if not re.match('"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"gm', current):
         raise errors.ValidationError('', reason="Your BC-Address isn't valid!")
     return True
 
