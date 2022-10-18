@@ -33,24 +33,28 @@ questions = [inquirer.Text('bc-address',
             inquirer.Path('file',
                 message="Where should the Data be written to?",
                 path_type=Path.FILE,
-                default="/group/doamin.admins/Files/prowise.wol")
-                ]
+                default="/group/domain.admins/Files/prowise.wol"),
+            inquirer.Text('hosttag',
+                message="Please enter the Hosttag",
+                default="Prowise",
+                )
+]
 
 
 answers = inquirer.prompt(questions)
 bc_address = answers['bc-address']
 file = answers['file']
-
+hosttag = answers['hosttag']
 
 class Database:
     def __init__(self) -> None:
         pass
 
-    def get_mac(self, filepath):
+    def get_mac(self, filepath, hosttag):
         try:
             conn = psycopg2.connect("dbname=iserv user=postgres")
             cur = conn.cursor()
-            cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ 'ProwiseBoard' AND mac IS NOT NULL;")
+            cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ '%s' AND mac IS NOT NULL;", [hosttag])
             rows = cur.fetchall()
 
             with open(filepath, 'w+') as f:
@@ -64,4 +68,4 @@ class Database:
 
 if __name__ == "__main__":
     db = Database()
-    db.get_mac(file)
+    db.get_mac(file, hosttag)
