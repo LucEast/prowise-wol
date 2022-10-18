@@ -59,7 +59,7 @@ class Database:
 
             with open(filepath, 'w+') as f:
                 for row in rows:
-                    f.write("%s\n" % row + bc_address)
+                    f.write("%s\t" % row + "%s\n" % bc_address)
                 print("Done!")
 
         except exception as E:
