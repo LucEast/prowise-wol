@@ -2,20 +2,20 @@ from logging import exception
 import os
 import sys
 import re
-from tkinter import E
+
+from inquirer import Path
 
 try:
     import psycopg2
 except:
-    print('Install requirements (psycopg2)')
+    print('Install requirements with "pip3 install -r requirements.txt"')
     quit()
 
 try:
     import inquirer
-    from inquirer.themes import GreenPassion
     from inquirer import errors
 except:
-    print('Install requirements with "pip3 install -r requirements.txt')
+    print('Install requirements with "pip3 install -r requirements.txt"')
     quit()
 
 
@@ -25,16 +25,21 @@ def ip_validation(bc_address, current):
     return True
 
 
-questions = [
-    inquirer.Text('bc-address',
-                  message="Please enter the BC-Address",
-                  validate=ip_validation,
-                  default="10.255.255.255",
-                  )
-]
+questions = [inquirer.Text('bc-address',
+                message="Please enter the BC-Address",
+                default="10.255.255.255",
+                validate=ip_validation                 
+                ),
+            inquirer.Path('file',
+                message="Where should the Data be written to?",
+                path_type=Path.FILE,
+                default="/group/doamin.admins/Files/prowise.wol")
+                ]
 
 
-bc_address = inquirer.prompt(questions)['bc-address']
+answers = inquirer.prompt(questions)
+bc_address = answers['bc-address']
+file = answers['file']
 
 
 class Database:
@@ -59,4 +64,4 @@ class Database:
 
 if __name__ == "__main__":
     db = Database()
-    db.get_mac("/group/domain.admins/Files/prowise.wol")
+    db.get_mac(file)
