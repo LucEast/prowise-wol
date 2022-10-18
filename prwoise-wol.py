@@ -54,7 +54,7 @@ class Database:
         try:
             conn = psycopg2.connect("dbname=iserv user=postgres")
             cur = conn.cursor()
-            cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ '%s' AND mac IS NOT NULL;", [hosttag])
+            cur.execute("SELECT h.mac FROM HOSTS h LEFT JOIN host_tag_assign hta ON (h.id = hta.host) LEFT JOIN host_tag ht ON (hta.tag = ht.id) WHERE ht.name ~ %s AND mac IS NOT NULL;", [hosttag])
             rows = cur.fetchall()
 
             with open(filepath, 'w+') as f:
