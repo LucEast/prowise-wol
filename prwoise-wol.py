@@ -1,4 +1,3 @@
-from logging import exception
 import os
 import sys
 import re
@@ -60,12 +59,41 @@ class Database:
             with open(filepath, 'w+') as f:
                 for row in rows:
                     f.write("%s\t" % row + "%s\n" % bc_address)
+                f.close()
                 print("Done!")
 
-        except exception as E:
+        except Exception as E:
             print(E)
+
+class cron:
+    def __init__(self) -> None:
+        pass
+
+    def krz(self, filepath):
+        if not os.path.exists(filepath):
+            try:
+                with open(filepath, 'w+') as f:
+                    f.write("# Cron Jobs for KRZ\n")
+                    f.write("\nSHELL=/bin/sh\n")
+                    f.write("PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\n")    
+                    f.write("\n# m h d m dow   user    command\n")
+                    f.write("\nWake Prowise Boards at 4am\n")
+                    f.write("\n0 4 * * * root wakeonlan -f {}\n".format(file))
+                    f.close()
+                    print("Created new Cronfile")
+            
+            except Exception as E:
+                print(E)
+        else:
+            with open(filepath, 'a') as f:
+                f.write("\nWake Prowise Boards at 4am\n")
+                f.write("\n0 4 * * * root wakeonlan -f {}\n".format(file))
+                f.close()
+                print("Appended to existing Cronfile")
 
 
 if __name__ == "__main__":
     db = Database()
     db.get_mac(file, hosttag)
+    cr = cron()
+    cr.krz("/etc/cron.d/krz")
