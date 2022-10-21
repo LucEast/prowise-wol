@@ -2,7 +2,6 @@ import os
 import sys
 import re
 
-from inquirer import Path
 
 try:
     import psycopg2
@@ -13,6 +12,7 @@ except:
 try:
     import inquirer
     from inquirer import errors
+    from inquirer import Path
 except:
     print('Install requirements with "pip3 install -r requirements.txt"')
     quit()
