@@ -88,7 +88,7 @@ class cron:
         else:
             with open(filepath, 'a') as f:
                 f.write("Wake Prowise Boards at 4am\n")
-                f.write("\n0 4 * * * root wakeonlan -f {}\n".format(file))
+                f.write("\n0 4 * * 1-5 root wakeonlan -f {}\n".format(file))
                 f.write(" ")
                 f.close()
                 print("Appended to existing Cronfile")
