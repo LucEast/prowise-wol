@@ -78,7 +78,7 @@ class cron:
                     f.write("PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\n")    
                     f.write("\n# m h d m dow   user    command\n")
                     f.write("\nWake Prowise Boards at 4am\n")
-                    f.write("\n0 4 * * * root wakeonlan -f {}\n".format(file))
+                    f.write("\n0 4 * * 1-5 root wakeonlan -f {}\n".format(file))
                     f.write(" ")
                     f.close()
                     print("Created new Cronfile")
