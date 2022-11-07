@@ -77,8 +77,8 @@ class cron:
                     f.write("\nSHELL=/bin/sh\n")
                     f.write("PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin\n")    
                     f.write("\n# m h d m dow   user    command\n")
-                    f.write("\nWake Prowise Boards at 4am\n")
-                    f.write("\n0 4 * * 1-5 root wakeonlan -f {}\n".format(file))
+                    f.write("\nWake Prowise Boards at 10pm\n")
+                    f.write("\n0 22 * * 1-5 root wakeonlan -f {}\n".format(file))
                     f.write(" ")
                     f.close()
                     print("Created new Cronfile")
@@ -87,8 +87,8 @@ class cron:
                 print(E)
         else:
             with open(filepath, 'a') as f:
-                f.write("Wake Prowise Boards at 4am\n")
-                f.write("\n0 4 * * 1-5 root wakeonlan -f {}\n".format(file))
+                f.write("Wake Prowise Boards at 10pm\n")
+                f.write("\n0 22 * * 1-5 root wakeonlan -f {}\n".format(file))
                 f.write(" ")
                 f.close()
                 print("Appended to existing Cronfile")
